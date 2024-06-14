@@ -1,0 +1,12 @@
+<!-- create_task.html -->
+<form method="post">
+    {% csrf_token %}
+    <!--{{ form.as_p }}-->
+    <label for="title">Title:</label>
+        <input type="text" id="title" name="title">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea>
+        <label for="file">File:</label>
+        <input type="file" id="file" name="file">
+    <button type="submit">Create Task</button>
+</form>

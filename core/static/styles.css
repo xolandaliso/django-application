@@ -1,0 +1,38 @@
+/* styles.css */
+.task-table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+.task-table th,
+.task-table td {
+    padding: 500px;
+    border-bottom: 1px solid black;
+}
+
+.task-table th {
+    background-color:green;
+    text-align: left;
+}
+
+.task-table td {
+    text-align: auto;
+}
+
+.task-table td:last-child {
+    white-space: nowrap;
+}
+
+.task-table td a,
+.task-table td button {
+    text-decoration: none;
+    color: #007bff;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+.task-table td a:hover,
+.task-table td button:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,162 @@
+<!-- task_list.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <title>Task List</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">   <!---for some reason the scrip is being called properly-->>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+
+
+<!---including style tag here since there's an issue with style.css-->
+<!--not best practice though-->
+<style>
+
+h1{
+        margin-left: 20px; /* Adjust the margin-left to move the title to the right */
+        margin-top: 20px; /* Adjust the margin-top to move the title lower */
+        
+}
+
+.task-table {
+    width: 70%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+.task-table th,
+.task-table td {
+    padding: 30px;
+    border-bottom: 1px solid black;
+}
+
+.task-table th {
+    background-color:white;
+    text-align: left;
+}
+
+.task-table td {
+    text-align: auto;
+}
+
+.task-table td:last-child {
+    white-space: nowrap;
+}
+
+.task-table td a,
+.task-table td button {
+    text-decoration: none;
+    color: #007bff;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+.task-table td a:hover,
+.task-table td button:hover {
+    text-decoration: underline;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
+
+*, *:before, *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: white;
+  font-family: 'Open Sans', sans-serif;
+}
+table {
+  background:grey;
+  border-radius: 0.25em;
+  border-collapse: collapse;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+th {
+  border-bottom: 1px solid #364043;
+  color: #E2B842;
+  font-size: 1.em;
+  font-weight: 600;
+  padding: 0.5em 1em;
+  text-align: left;
+}
+td {
+  color: #fff;
+  font-weight: 400;
+  padding: 0.65em 1em;
+}
+.disabled td {
+  color: #4F5F64;
+}
+tbody tr {
+  transition: background 0.25s ease;
+}
+tbody tr:hover {
+  background: #014055;
+}
+
+
+</style>
+</head>
+
+<body>
+    <div class="container mt-5">
+            <!-- task form heading -->
+            <h1 style="text-align: center;"><span style="color: green;">List of tasks </span></h1>
+        {% if tasks %}
+        <table >
+            <thead>
+                <tr>
+                <th>Title
+                <th>Description
+                <th>Status
+                <th>Priority
+                <th>Files
+                <th>Assigned User
+                <th>Actions
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.description }}</td>
+                    <td>{{ task.status }}</td>
+                    <td>{{ task.priority }}</td>
+                    <td>{{ task.file }}</td>
+                    <td>{{ task.assigned_user }}</td>
+                    <td>
+                        <!-- Update Button -->
+                        <form action="{% url 'task_update' task.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit">Update</button>
+                        </form>
+                        <!-- Delete Button -->
+                        <form action="{% url 'task_delete' task.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p>No tasks currently.</p>
+    {% endif %}
+    <!-- Form to create a new task -->
+    <h2 style=" margin-top: 50px; margin-left:20px; color: green;">Create Task</h2>
+    <form action="{% url 'task_create' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" style="margin-left:20px;">Create New Task</button>
+    </form>
+</body>
+</html>
+
